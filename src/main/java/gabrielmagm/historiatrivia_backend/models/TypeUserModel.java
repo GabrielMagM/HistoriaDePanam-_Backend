@@ -28,7 +28,7 @@ public class TypeUserModel {
 
     @NotBlank(message = "El campo 'name' no puede estar vacío")
     @Column(nullable = false, unique = true, length = 50)
-    private String type_name;
+    private String name;
 
     @Column(length = 255)
     private String description;
