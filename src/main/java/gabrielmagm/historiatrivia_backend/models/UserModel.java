@@ -45,5 +45,5 @@ public class UserModel {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_user_id", nullable = false)
     private TypeUserModel typeUser;
-
+    
 }

@@ -10,5 +10,5 @@ public interface UserService {
     UserModel getUserById(Long id);
     UserModel createUser(UserModel user);
     UserModel updateUser(Long id, UserModel user);
-    UserModel delete(Long id);
+    boolean deleteUser(Long id);
 }

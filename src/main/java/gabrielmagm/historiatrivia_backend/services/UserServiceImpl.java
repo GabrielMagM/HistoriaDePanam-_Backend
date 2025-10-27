@@ -65,14 +65,15 @@ public class UserServiceImpl implements UserService {
         existingUser.setTypeUser(user.getTypeUser());
         return userRepository.save(existingUser);
     }
-
+    
     @Override
-    public UserModel delete(Long id) {
+    public boolean deleteUser(Long id) {
         UserModel user = userRepository.findById(id).orElse(null);
-        if (user != null) {
-            userRepository.delete(user);
+        if (user == null) {
+            return false; // no se encontró el usuario
         }
-        return user;    
+        userRepository.delete(user); // elimina el usuario
+        return true; // eliminado correctamente
     }
 }
     
