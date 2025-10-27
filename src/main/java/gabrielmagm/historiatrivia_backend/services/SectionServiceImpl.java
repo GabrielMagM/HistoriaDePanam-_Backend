@@ -37,10 +37,26 @@ public class SectionServiceImpl implements SectionService {
     public SectionModel updateSection(Long id, SectionModel section) {
         SectionModel existingSection = sectionRepository.findById(id).orElse(null);
         if (existingSection == null) {
-            return null;
+            return null; // para que el controlador devuelva 404
         }
-        existingSection.setTitle(section.getTitle());
-        existingSection.setDescription(section.getDescription());
+
+        // Solo actualiza los campos que no sean null
+        if (section.getTitle() != null && !section.getTitle().isBlank()) {
+            existingSection.setTitle(section.getTitle());
+        }
+
+        if (section.getDescription() != null) {
+            existingSection.setDescription(section.getDescription());
+        }
+
+        if (section.getImagenUrl() != null) {
+            existingSection.setImagenUrl(section.getImagenUrl());
+        }
+
+        if (section.getVideoUrl() != null) {
+            existingSection.setVideoUrl(section.getVideoUrl());
+        }
+
         return sectionRepository.save(existingSection);
     }
 
