@@ -5,13 +5,13 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Entity
-@Table(name = "topic")
+@Table(name = "theme")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TopicModel {
+public class ThemeModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
