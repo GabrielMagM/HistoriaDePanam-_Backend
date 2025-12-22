@@ -20,7 +20,7 @@ public class ThemeServiceImpl implements ThemeService {
 
     @Override
     public List<ThemeModel> getAllThemes() {
-        return (List<ThemeModel>) themeRepository.findAll();
+        return themeRepository.findAll();
     }
 
     @Override
@@ -48,36 +48,22 @@ public class ThemeServiceImpl implements ThemeService {
         return themeRepository.save(theme);
     }
     
-    @Override 
+    @Override
     public ThemeModel updateTheme(Long id, ThemeModel theme) {
-        ThemeModel existingTheme = themeRepository.findById(id).orElse(null);
-        if (existingTheme == null) {
-            return null;
-        }
+        ThemeModel existing = getThemeById(id);
+        if (existing == null) return null;
 
-        if (theme.getTitle() != null && !theme.getTitle().isBlank()) {
-            existingTheme.setTitle(theme.getTitle());
-        }
+        if (theme.getTitle() != null) existing.setTitle(theme.getTitle());
+        if (theme.getDescription() != null) existing.setDescription(theme.getDescription());
+        if (theme.getImagenUrl() != null) existing.setImagenUrl(theme.getImagenUrl());
 
-        if (theme.getDescription() != null) {
-            existingTheme.setDescription(theme.getDescription());
-        }
-
-        if (theme.getSection() != null && theme.getSection().getId() != null) {
-            SectionModel section = sectionRepository.findById(theme.getSection().getId())
-                    .orElseThrow(() -> new IllegalArgumentException("Sección no encontrada"));
-            existingTheme.setSection(section);
-        }
-
-        return themeRepository.save(existingTheme);
+        return themeRepository.save(existing);
     }
+
 
     @Override
     public Boolean deleteTheme(Long id) {
-        ThemeModel existingTheme = themeRepository.findById(id).orElse(null);
-        if (existingTheme == null) {
-            return false;
-        }
+        if (!themeRepository.existsById(id)) return false;
         themeRepository.deleteById(id);
         return true;
     }

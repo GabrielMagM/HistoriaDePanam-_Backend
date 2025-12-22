@@ -2,6 +2,7 @@ package gabrielmagm.historiatrivia_backend.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,12 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import gabrielmagm.historiatrivia_backend.mapper.ThemeMapper;
 import gabrielmagm.historiatrivia_backend.models.ThemeModel;
 import gabrielmagm.historiatrivia_backend.services.Interfaces.ThemeService;
 
-@RestController
+@Controller
 @RequestMapping("/api/themes")
 @CrossOrigin(origins = "*")
 public class ThemeController {
@@ -24,19 +25,31 @@ public class ThemeController {
 
     @GetMapping("list")
     public ResponseEntity<?> getAllThemes() {
-        return ResponseEntity.ok(themeService.getAllThemes());
+        var themes = themeService.getAllThemes()
+                .stream()
+                .map(ThemeMapper::toDTO)
+                .toList();
+        return ResponseEntity.ok(themes);
     }
+
 
     @GetMapping("/section/{sectionId}")
     public ResponseEntity<?> getThemesBySection(@PathVariable Long sectionId) {
-        return ResponseEntity.ok(themeService.getThemesBySection(sectionId));
+        var themes = themeService.getThemesBySection(sectionId)
+                .stream()
+                .map(ThemeMapper::toDTO)
+                .toList();
+        return ResponseEntity.ok(themes);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getThemeById(@PathVariable Long id) {
-        var theme = themeService.getThemeById(id);
-        return theme == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(theme);
+        ThemeModel theme = themeService.getThemeById(id);
+        return theme == null
+                ? ResponseEntity.notFound().build()
+                : ResponseEntity.ok(ThemeMapper.toDTO(theme));
     }
+
 
     @PostMapping("/add")
     public ResponseEntity<?> createTheme(@RequestBody ThemeModel theme) {
