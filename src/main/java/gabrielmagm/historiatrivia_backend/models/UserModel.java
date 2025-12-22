@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users") // "user" es palabra reservada en PostgreSQL, mejor plural
+@Table(name = "users") 
 @Getter
 @Setter
 @NoArgsConstructor

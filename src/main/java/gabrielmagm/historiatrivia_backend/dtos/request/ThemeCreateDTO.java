@@ -1,9 +1,9 @@
-package gabrielmagm.historiatrivia_backend.dtos;
+package gabrielmagm.historiatrivia_backend.dtos.request;
 
 import lombok.*;
 @Getter
 @Setter
-public class ThemeDTO {
+public class ThemeCreateDTO {
     private Long id;
     private String title;
     private String description;

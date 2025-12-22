@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import gabrielmagm.historiatrivia_backend.dtos.request.ThemeUpdateDTO;
 import gabrielmagm.historiatrivia_backend.models.SectionModel;
 import gabrielmagm.historiatrivia_backend.models.ThemeModel;
 import gabrielmagm.historiatrivia_backend.repository.SectionRepository;
@@ -49,13 +50,29 @@ public class ThemeServiceImpl implements ThemeService {
     }
     
     @Override
-    public ThemeModel updateTheme(Long id, ThemeModel theme) {
-        ThemeModel existing = getThemeById(id);
+    public ThemeModel updateTheme(Long id, ThemeUpdateDTO dto) {
+
+        ThemeModel existing = themeRepository.findById(id).orElse(null);
         if (existing == null) return null;
 
-        if (theme.getTitle() != null) existing.setTitle(theme.getTitle());
-        if (theme.getDescription() != null) existing.setDescription(theme.getDescription());
-        if (theme.getImagenUrl() != null) existing.setImagenUrl(theme.getImagenUrl());
+        if (dto.getTitle() != null) {
+            existing.setTitle(dto.getTitle());
+        }
+
+        if (dto.getDescription() != null) {
+            existing.setDescription(dto.getDescription());
+        }
+
+        if (dto.getImagenUrl() != null) {
+            existing.setImagenUrl(dto.getImagenUrl());
+        }
+
+        if (dto.getSectionId() != null) {
+            SectionModel section = sectionRepository
+                    .findById(dto.getSectionId())
+                    .orElseThrow(() -> new IllegalArgumentException("Sección no válida"));
+            existing.setSection(section);
+        }
 
         return themeRepository.save(existing);
     }
