@@ -25,7 +25,12 @@ public class QuestionTypeModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name; //Multiple Choice, True/False, Short Answer, etc.
+    @Column(nullable = false, unique = true, length = 50)
+    private String name; // MULTIPLE_CHOICE, TRUE_FALSE, etc.
     
+    @Column(length = 100)
+    private String displayName; // "Opción Múltiple", "Verdadero/Falso", etc.
+    
+    @Column(length = 255)
+    private String description; // Descripción opcional del tipo
 }

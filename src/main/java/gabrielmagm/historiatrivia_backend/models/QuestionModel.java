@@ -1,5 +1,6 @@
 package gabrielmagm.historiatrivia_backend.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -35,7 +36,7 @@ public class QuestionModel {
     private String text;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "question_type_id", nullable = false)
+    @JoinColumn(name = "theme_id", nullable = false)
     private ThemeModel theme;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -43,5 +44,6 @@ public class QuestionModel {
     private QuestionTypeModel questionType;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<AnswerModel> answers;
+    @Builder.Default
+    private List<AnswerModel> answers = new ArrayList<>();
 }
