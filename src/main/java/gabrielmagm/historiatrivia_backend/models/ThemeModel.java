@@ -29,5 +29,5 @@ public class ThemeModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "section_id", nullable = false)
-    private SectionModel section;  // 🔗 relación: muchos topics pertenecen a una sección
+    private SectionModel section;  
 }

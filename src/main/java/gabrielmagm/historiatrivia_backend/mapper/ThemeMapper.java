@@ -5,19 +5,13 @@ import gabrielmagm.historiatrivia_backend.dtos.response.ThemeResponseDTO;
 import gabrielmagm.historiatrivia_backend.models.ThemeModel;
 
 public class ThemeMapper {
-    public static ThemeCreateDTO toDTO(ThemeModel theme) {
-        ThemeCreateDTO dto = new ThemeCreateDTO();
-        dto.setId(theme.getId());
-        return dto;
-    }
-
     public static ThemeResponseDTO toResponseDTO(ThemeModel theme) {
-
         ThemeResponseDTO dto = new ThemeResponseDTO();
         dto.setId(theme.getId());
         dto.setTitle(theme.getTitle());
         dto.setDescription(theme.getDescription());
         dto.setImagenUrl(theme.getImagenUrl());
+
         if (theme.getSection() != null) {
             dto.setSectionId(theme.getSection().getId());
             dto.setSectionTitle(theme.getSection().getTitle());
@@ -25,7 +19,6 @@ public class ThemeMapper {
 
         return dto;
     }
-    
 
 }
 

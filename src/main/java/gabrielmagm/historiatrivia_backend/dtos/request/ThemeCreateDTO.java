@@ -3,6 +3,8 @@ package gabrielmagm.historiatrivia_backend.dtos.request;
 import lombok.*;
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ThemeCreateDTO {
     private Long id;
     private String title;
